@@ -1,10 +1,14 @@
 package com.example.forum
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.forum.posts_db.postsDB
+import com.example.forum.posts_db.postsDao
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 
@@ -52,14 +56,36 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        createPosts()
-    }
     override fun onDestroy() {
         postsDB.destroyInstance()
         postsDb = null
         super.onDestroy()
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_delete,menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item?.itemId){
+
+            R.id.deleteall -> {
+                val r = Runnable {
+                    try {
+                        postsDb?.postsDao()?.deleteAll()
+                    }
+                    catch(e: Exception) {
+                        Log.d("tag", "Error - $e")
+
+                    }
+
+                }
+                val thread = Thread(r)
+                thread.start()
+
+            }
+
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 
@@ -77,15 +103,5 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    public fun createPosts(){
 
-
-
-
-
-            /* "nameKey"라는 이름의 key에 저장된 값이 있다면
-               textView의 내용을 "nameKey" key에서 꺼내온 값으로 바꾼다 */
-
-
-    }
 }

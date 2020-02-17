@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.forum.PostsInfo
 
-@Database(entities = [PostsInfo::class], version = 1)
+@Database(entities = [PostsInfo::class], version = 1 ,exportSchema = false)
 abstract class postsDB : RoomDatabase(){
 
         abstract fun postsDao(): postsDao

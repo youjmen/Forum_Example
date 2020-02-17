@@ -3,6 +3,7 @@ package com.example.forum
 import android.content.Context
 import android.content.Intent
 import android.system.Os.bind
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,13 +39,25 @@ class PostsInfoAdapter(val context: Context, val items :List<PostsInfo>): Recycl
 
     }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount(): Int {
+        Log.d("getItemCount : ", items.size.toString())
+
+        return items.size
+    }
 
     override fun onBindViewHolder(holder: PostsInfoAdapter.ViewHolder, position: Int) {
 
         holder.bind(items[position])
+        Log.d("current postion : ", position.toString())
+        Log.d("current info : ", items[position].postsTitle)
         holder.itemView.postsLayout.setOnClickListener{
             val intent = Intent(context, PostsActivity::class.java)
+            intent.putExtra("authorsName",items[position].authorsName)
+            intent.putExtra("postsContent",items[position].postsContent)
+            intent.putExtra("postsTitle",items[position].postsTitle)
+            intent.putExtra("recommendCount",items[position].recommendCount)
+            intent.putExtra("postsView",items[position].postsView)
+            intent.putExtra("writtenDate",items[position].writtenDate)
             context.startActivity(intent)
 
 

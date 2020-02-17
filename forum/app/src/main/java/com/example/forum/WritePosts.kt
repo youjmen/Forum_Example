@@ -33,6 +33,7 @@ class WritePosts : AppCompatActivity() {
             newPostsInfo.recommendCount = 0
             newPostsInfo.postsView = 0
             newPostsInfo.writtenDate = getLocalTime()
+             newPostsInfo.postsContent = postsContents.text.toString()
             postsDb?.postsDao()?.insert(newPostsInfo)
         }
 
